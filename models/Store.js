@@ -13,7 +13,28 @@ const storeSchema = new mongoose.Schema({
 		type: String,
 		trim: true
 	},
-	tags: [String]
+	tags: [String],
+	created: {
+		type: Date, 
+		default: Date.now
+	},
+	location: {
+		// location TYPE
+		type: {
+			type: String, 
+			default: 'Point'
+		},
+		// location coordinates
+		coordinates: [{
+			type: Number, 
+			required: 'you must supply coordinates'
+		}],
+		// location address
+		address: {
+			type: String,
+			required: 'you must supply an address'
+		}
+	} 
 });
 
 // will be coming back to this-- presently 2 stores w/ same name would have overlap slugs (no bueno)
