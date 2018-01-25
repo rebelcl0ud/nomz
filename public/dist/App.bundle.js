@@ -63,11 +63,42 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 2);
+/******/ 	return __webpack_require__(__webpack_require__.s = 3);
 /******/ })
 /************************************************************************/
 /******/ ([
 /* 0 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+function autocomplete(input, latInput, longInput) {
+	// lat/long order here because Google does it this way unlike Mongo that does it reverse
+	// console.log(input, latInput, longInput);
+	if (!input) return; // skips if no function input on page
+	var dropdown = new google.maps.places.Autocomplete(input);
+
+	dropdown.addListener('place_changed', function () {
+		var place = dropdown.getPlace();
+		// console.log(place);
+		latInput.value = place.geometry.location.lat();
+		longInput.value = place.geometry.location.long();
+	});
+	// if someone hits enter do not submit form
+	input.on('keydown', function (e) {
+		if (e.keyCode === 13) e.preventDefault(); // that will stop submission of form
+	});
+}
+
+// ES6-- we do not have es6 on node, but webpack does have the ability to compile
+exports.default = autocomplete;
+
+/***/ }),
+/* 1 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -97,21 +128,32 @@ exports.$ = $;
 exports.$$ = $$;
 
 /***/ }),
-/* 1 */
+/* 2 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
-/* 2 */
+/* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-__webpack_require__(1);
+__webpack_require__(2);
 
-var _bling = __webpack_require__(0);
+var _bling = __webpack_require__(1);
+
+var _autocomplete = __webpack_require__(0);
+
+var _autocomplete2 = _interopRequireDefault(_autocomplete);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+// 3 args that go in mimic IDs in _storeForm.pug
+// note: below looks like jQuery, it is NOT
+// reason is due to the bling file ex: below is actually document.querySelector
+(0, _autocomplete2.default)((0, _bling.$)('#address'), (0, _bling.$)('#lat'), (0, _bling.$)('#long'));
 
 /***/ })
 /******/ ]);
