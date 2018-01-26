@@ -76,7 +76,7 @@
 Object.defineProperty(exports, "__esModule", {
 	value: true
 });
-function autocomplete(input, latInput, longInput) {
+function autocomplete(input, latInput, lngInput) {
 	// lat/long order here because Google does it this way unlike Mongo that does it reverse
 	// console.log(input, latInput, longInput);
 	if (!input) return; // skips if no function input on page
@@ -86,9 +86,11 @@ function autocomplete(input, latInput, longInput) {
 		var place = dropdown.getPlace();
 		// console.log(place);
 		latInput.value = place.geometry.location.lat();
-		longInput.value = place.geometry.location.long();
+		lngInput.value = place.geometry.location.lng();
 	});
 	// if someone hits enter do not submit form
+	// below is actually input.addEventListener(type:DOMString, callback: EventListener, capture?: boolean)('')
+	// ^ because of bling.js
 	input.on('keydown', function (e) {
 		if (e.keyCode === 13) e.preventDefault(); // that will stop submission of form
 	});
@@ -153,7 +155,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 // 3 args that go in mimic IDs in _storeForm.pug
 // note: below looks like jQuery, it is NOT
 // reason is due to the bling file ex: below is actually document.querySelector
-(0, _autocomplete2.default)((0, _bling.$)('#address'), (0, _bling.$)('#lat'), (0, _bling.$)('#long'));
+(0, _autocomplete2.default)((0, _bling.$)('#address'), (0, _bling.$)('#lat'), (0, _bling.$)('#lng'));
 
 /***/ })
 /******/ ]);
